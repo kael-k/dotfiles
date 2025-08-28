@@ -1,0 +1,49 @@
+set folder    = "~/.mail/kael-k.io"
+set spool_file   = "+INBOX/dev"
+set record    = "+Sent"
+set postponed = "+Drafts"
+set mbox      = "+Archive"
+mailboxes `find ~/.mail/kael-k.io -type d -name cur -printf "+%P " | sed 's|/cur||g'`
+
+# Sending via msmtp
+set sendmail  = "/usr/bin/msmtp"
+set use_from  = yes
+set real_name  = "Kael D'Alcamo"
+set from      = "dev@kael-k.io"
+set use_envelope_from = yes
+set envelope_from_address = "dev@kael-k.io"
+set edit_headers      = yes
+
+
+# Sorting / threading
+set strict_threads    = yes                  # thread by In-Reply-To/References
+set sort              = reverse-threads      # newest threads first
+set sort_aux          = last-date-received   # within thread: newest last
+
+
+# Extra
+set date_format = "%Y-%m-%d %H:%M:%S"
+set index_format = "%D  %-28.28F  %s"
+set editor = "nvim +':setlocal tw=72 formatoptions+=w nojoinspaces'"
+set text_flowed = no
+set charset = "utf-8"
+set assumed_charset = "utf-8"
+set text_flowed = no
+set reflow_text       = no
+set wrap              = 72                   # hard wrap in the pager (fallback)
+
+
+# Cache
+set header_cache      = "~/.cache/neomutt/headers"
+set message_cachedir  = "~/.cache/neomutt/bodies"
+set mail_check        = 30
+
+# --- MIME / diffs (view patches nicely) ---
+auto_view text/x-diff
+auto_view text/x-patch
+alternative_order text/plain text/html  # prefer plain; still shows HTML as fallback if needed
+ignore *                                  # hide header noise…
+unignore From: To: Cc: Subject: Date: Message-Id: In-Reply-To: References: List-Id: X-Mailer:
+hdr_order From: To: Cc: Subject: Date: Message-Id: In-Reply-To: References: List-Id:
+
+source ~/.config/neomutt/colorschemes/tokyonight.muttrc

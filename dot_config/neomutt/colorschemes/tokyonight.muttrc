@@ -1,0 +1,50 @@
+# --- Tokyonight-night inspired palette (256c approximations) ---
+# bg:   #1a1b26 ≈ color235
+# fg:   #c0caf5 ≈ color153
+# blue: #7aa2f7 ≈ color111
+# cyan: #7dcfff ≈ color117
+# purp: #bb9af7 ≈ color141
+# green:#9ece6a ≈ color149
+# yellow:#e0af68 ≈ color179
+# orange:#ff9e64 ≈ color209
+# red:  #f7768e ≈ color210
+# dim:  #414868 ≈ color60
+
+# Base / normals
+color normal          color153  color235
+color indicator       color235  color117        # current line bar
+color status          color235  color111
+color error           color235  color210
+color message         color235  color149
+
+# Index highlights
+color index           color153  color235
+color index           color117  color235 "~N"   # new
+color index           color179  color235 "~O"   # old
+color index           color209  color235 "~F"   # flagged
+color index           color210  color235 "~D"   # deleted
+color index           color141  color235 "~T"   # tagged
+
+# Headers (in pager)
+color header          color117  color235 "^(From|To|Cc)"
+color header          color141  color235 "^Subject"
+color header          color111  color235 "^Date"
+color header          color179  color235 "^List-Id"
+
+# Quoting levels
+color quoted          color111  color235
+color quoted1         color141  color235
+color quoted2         color117  color235
+color quoted3         color149  color235
+
+# Body bits
+color signature       color60   color235
+color attachment      color149  color235
+color bold            color153  color235
+color underline       color153  color235
+
+# Sidebar (if using it)
+color sidebar_divider color60   color235
+color sidebar_new     color117  color235
+color sidebar_flagged color209  color235
+
