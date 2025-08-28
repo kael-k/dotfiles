@@ -1,0 +1,14 @@
+defaults
+auth           on
+tls            on
+tls_starttls   off
+logfile        ~/.local/share/msmtp.log
+
+account dev@kael-k.io
+host smtp.mailbox.org
+port 465
+from dev@kael-k.io
+user {{ (keepassxc "email/kael-k.io").UserName }}
+passwordeval  "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/mail/kael-k.io.asc"
+
+account default : dev@kael-k.io

@@ -1,0 +1,20 @@
+IMAPAccount kael-k.io
+Host imap.mailbox.org
+User {{ (keepassxc "email/kael-k.io").UserName }}
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.config/mail/kael-k.io.asc"
+TLSType IMAPS
+
+IMAPStore kael-k.io_remote
+Account kael-k.io
+
+MaildirStore kael-k.io_local
+Path ~/.mail/kael-k.io/
+Inbox ~/.mail/kael-k.io/INBOX
+SubFolders Verbatim
+
+Channel kael-k.io
+Far :kael-k.io_remote:
+Near :kael-k.io_local:
+Patterns *
+Create Both
+SyncState *
