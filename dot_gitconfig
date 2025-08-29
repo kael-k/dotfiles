@@ -1,0 +1,16 @@
+[user]
+	name = Kael D'Alcamo
+	email = dev@kael-k.io
+	signingkey = F82FC32E7289FC31697CE6C545E9E6E95B499584
+
+[core]
+	autocrlf = input
+
+[commit]
+   gpgSign = true
+
+[tag]
+    gpgSign = true
+
+[gpg]
+    program = gpg

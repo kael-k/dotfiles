@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -eu
+
+tmpkey="$(mktemp)"
+trap 'rm -f "$tmpkey"' EXIT
+
+echo "Importing GPG private key complete..."
+cat >"$tmpkey" <<EOF
+{{ keepassxcAttachment "gpg/dev@kael-k.io" "gpg-private.asc" }}
+EOF
+gpg --import "$tmpkey"
+
+echo "Importing GPG ownertrust..."
+cat >"$tmpkey" <<EOF
+{{ keepassxcAttachment "gpg/dev@kael-k.io" "ownertrust.txt" }}
+EOF
+sed -i -e '/^\s*$/d' "$tmpkey"
+gpg --import-ownertrust "$tmpkey"
+
+echo "GPG key import complete."
