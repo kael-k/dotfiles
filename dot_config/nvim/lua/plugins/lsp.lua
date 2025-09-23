@@ -42,7 +42,7 @@ return {
 			}
 
 			for _, server in ipairs(servers) do
-				require("lspconfig")[server].setup({ capabilities = capabilities })
+				vim.lsp.config(server, { capabilities = capabilities })
 			end
 
 			require("lsp_signature").setup()

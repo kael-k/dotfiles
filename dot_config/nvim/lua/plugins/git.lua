@@ -3,6 +3,7 @@ return {
 	{ "tpope/vim-fugitive" },
 	{
 		"sindrets/diffview.nvim",
+		lazy = false,
 		keys = {
 			{
 				"<leader>gdo",

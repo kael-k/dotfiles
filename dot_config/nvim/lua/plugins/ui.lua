@@ -8,8 +8,8 @@ return {
 				options = {
 					icons_enabled = true,
 					theme = "auto",
-					component_separators = { left = "", right = "" },
-					section_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+					component_separators = { left = "", right = "" },
 					disabled_filetypes = {
 						statusline = {},
 						winbar = {},
@@ -38,34 +38,57 @@ return {
 					},
 				},
 				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_a = { {
+						"mode",
+						fmt = function(str)
+							return str:sub(1, 1)
+						end,
+					} },
+					lualine_b = { "diagnostics" },
 					lualine_c = {
 						{
 							"filename",
-							file_status = 1,
-							--max_length = vim.o.columns * 2 / 3
+							file_status = true,
+							newfile_status = true,
+							path = 1,
 						},
 					},
 					lualine_x = { "encoding", "fileformat", "filetype" },
-					lualine_y = { "progress" },
+					lualine_y = {},
 					lualine_z = { "%l:%c/%L" },
 				},
 				inactive_sections = {
 					lualine_a = {},
-					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_b = { "diagnostics" },
 					lualine_c = {
 						{
 							"filename",
-							file_status = 1,
-							--max_length = vim.o.columns * 2 / 3
+							file_status = true,
+							newfile_status = true,
+							component_separators = { left = "", right = "" },
+							path = 1,
 						},
 					},
 					lualine_x = { "encoding", "fileformat", "filetype" },
-					lualine_y = { "progress" },
+					lualine_y = {},
 					lualine_z = { "%l:%c/%L" },
 				},
-				tabline = {},
+				tabline = {
+					lualine_a = { "branch", "diff" },
+					lualine_b = {
+						{
+							"tabs",
+							max_length = vim.o.columns * 0.8,
+							mode = 2,
+							path = 0,
+							use_mode_colors = true,
+						},
+					},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = {},
+				},
 				winbar = {},
 				inactive_winbar = {},
 				extensions = {},
@@ -141,6 +164,17 @@ return {
 			words = { enabled = true },
 			rename = { enabled = true },
 			bufdelete = { enabled = true },
+			styles = {
+				notification_history = {
+					keys = {
+						q = "close",
+						n_esc = { "<esc>", { "close" }, mode = "n", expr = true },
+					},
+					wo = {
+						wrap = true,
+					},
+				},
+			},
 		},
 
 		keys = {
@@ -170,7 +204,7 @@ return {
 			{
 				"<leader>wn",
 				function()
-					Snacks.picker.notifications()
+					Snacks.notifier.show_history()
 				end,
 				desc = "Notification History",
 			},
@@ -182,14 +216,14 @@ return {
 				desc = "File Explorer",
 			},
 			{
-				"<leader>wt",
+				"<leader>ws",
 				function()
 					Snacks.terminal()
 				end,
 				desc = "Toggle Terminal",
 			},
 
-			-- Find
+			-- Find files
 			{
 				"<leader>fC",
 				function()
@@ -341,14 +375,14 @@ return {
 				desc = "Commands",
 			},
 			{
-				"<leader>sd",
+				"<leader>se",
 				function()
 					Snacks.picker.diagnostics()
 				end,
 				desc = "Diagnostics",
 			},
 			{
-				"<leader>sD",
+				"<leader>sE",
 				function()
 					Snacks.picker.diagnostics_buffer()
 				end,
@@ -367,13 +401,6 @@ return {
 					Snacks.picker.highlights()
 				end,
 				desc = "Highlights",
-			},
-			{
-				"<leader>si",
-				function()
-					Snacks.picker.icons()
-				end,
-				desc = "Icons",
 			},
 			{
 				"<leader>sj",
@@ -411,13 +438,6 @@ return {
 				desc = "Man Pages",
 			},
 			{
-				"<leader>sq",
-				function()
-					Snacks.picker.qflist()
-				end,
-				desc = "Quickfix List",
-			},
-			{
 				"<leader>sR",
 				function()
 					Snacks.picker.resume()
@@ -432,14 +452,14 @@ return {
 				desc = "Undo History",
 			},
 			{
-				"<leader>ss",
+				"<leader>ds",
 				function()
 					Snacks.picker.lsp_symbols()
 				end,
 				desc = "LSP Symbols",
 			},
 			{
-				"<leader>sS",
+				"<leader>dS",
 				function()
 					Snacks.picker.lsp_workspace_symbols()
 				end,
