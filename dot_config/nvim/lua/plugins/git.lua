@@ -1,23 +1,55 @@
 return {
-	{ "lewis6991/gitsigns.nvim", config = true },
-	{ "tpope/vim-fugitive" },
 	{
-		"sindrets/diffview.nvim",
-		lazy = false,
+		"lewis6991/gitsigns.nvim",
+		event = "BufReadPre",
+		opts = {
+			preview_config = {
+				border = "rounded",
+			},
+		},
 		keys = {
 			{
-				"<leader>gdo",
+				"<leader>gB",
 				function()
-					vim.cmd("DiffviewOpen HEAD")
+					require("gitsigns").blame()
 				end,
-				desc = "Open git Diffview",
+				desc = "Git blame",
 			},
 			{
-				"<leader>gdq",
+				"<leader>gdi",
 				function()
-					vim.cmd("DiffviewClose")
+					require("gitsigns").preview_hunk_inline()
 				end,
-				desc = "Close git Diffview",
+				desc = "Git Preview hunk inline",
+			},
+			{
+				"<leader>grh",
+				function()
+					require("gitsigns").reset_hunk()
+				end,
+				desc = "Git reset on current hunk",
+			},
+			{
+				"<leader>grb",
+				function()
+					require("gitsigns").reset_buffer()
+				end,
+				desc = "Git reset on current buffer",
+			},
+		},
+	},
+	{
+		"tpope/vim-fugitive",
+		keys = {
+			{
+				"<leader>gdv",
+				":Gvdiffsplit<CR>",
+				desc = "Git vertical diff",
+			},
+			{
+				"<leader>gdh",
+				":Gdiffsplit<CR>",
+				desc = "Git horrizontal diff",
 			},
 		},
 	},

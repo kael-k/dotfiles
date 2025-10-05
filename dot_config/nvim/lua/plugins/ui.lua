@@ -1,3 +1,27 @@
+local function setqflist(picker, append)
+	local sel = picker:selected()
+	local items = #sel > 0 and sel or picker:items()
+	local qf = {} ---@type vim.quickfix.entry[]
+	for _, item in ipairs(items) do
+		qf[#qf + 1] = {
+			filename = Snacks.picker.util.path(item),
+			bufnr = item.buf,
+			lnum = item.pos and item.pos[1] or 1,
+			col = item.pos and item.pos[2] + 1 or 1,
+			end_lnum = item.end_pos and item.end_pos[1] or nil,
+			end_col = item.end_pos and item.end_pos[2] + 1 or nil,
+			text = item.line or item.comment or item.label or item.name or item.detail or item.text,
+			pattern = item.search,
+			valid = true,
+		}
+	end
+	if append then
+		vim.fn.setqflist(qf, "a")
+	else
+		vim.fn.setqflist(qf)
+	end
+end
+
 return {
 	{ "mg979/vim-visual-multi" },
 	{
@@ -136,8 +160,19 @@ return {
 			picker = {
 				enabled = true,
 				ui_select = true,
+				actions = {
+					qflist = function(picker)
+						setqflist(picker)
+					end,
+					qflist_append = function(picker)
+						setqflist(picker, true)
+					end,
+				},
 				sources = {
 					explorer = {
+						layout = {
+							preview = { main = true, enabled = false },
+						},
 						win = {
 							list = {
 								keys = {
@@ -152,6 +187,7 @@ return {
 						keys = {
 							["<C-t>"] = { "tab", mode = { "n", "i" } },
 							["<C-q>"] = { "qflist", mode = { "n", "i" } },
+							["<CM-q>"] = { "qflist_append", mode = { "n", "i" } },
 						},
 					},
 				},
@@ -222,8 +258,15 @@ return {
 				end,
 				desc = "Toggle Terminal",
 			},
+			{
+				"<leader>wq",
+				function()
+					Snacks.picker.qflist()
+				end,
+				desc = "Quickfix List",
+			},
 
-			-- Find files
+			-- Find files and buffers
 			{
 				"<leader>fC",
 				function()
@@ -249,6 +292,13 @@ return {
 				"<leader>fr",
 				function()
 					Snacks.picker.recent()
+				end,
+				desc = "Recent",
+			},
+			{
+				"<leader>fb",
+				function()
+					Snacks.picker.buffers()
 				end,
 				desc = "Recent",
 			},
@@ -303,7 +353,7 @@ return {
 				desc = "Git Log File",
 			},
 			{
-				"<leader>gB",
+				"<leader>gW",
 				function()
 					Snacks.gitbrowse()
 				end,
@@ -528,5 +578,125 @@ return {
 		init = function()
 			require("snacks")
 		end,
+	},
+	{
+		"mrjones2014/smart-splits.nvim",
+		-- build = "./kitty/install-kittens.bash",
+		lazy = false,
+		keys = {
+			-- Focus movement - works in normal, visual, and terminal modes
+			{
+				"<A-h>",
+				function()
+					require("smart-splits").move_cursor_left()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Move focus left",
+			},
+			{
+				"<A-j>",
+				function()
+					require("smart-splits").move_cursor_down()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Move focus down",
+			},
+			{
+				"<A-k>",
+				function()
+					require("smart-splits").move_cursor_up()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Move focus up",
+			},
+			{
+				"<A-l>",
+				function()
+					require("smart-splits").move_cursor_right()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Move focus right",
+			},
+
+			-- Window swapping
+			{
+				"<A-C-h>",
+				function()
+					smart_split = require("smart-splits")
+					smart_split.swap_buf_left()
+					smart_split.move_cursor_left()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Swap window left",
+			},
+			{
+				"<A-C-j>",
+				function()
+					smart_split = require("smart-splits")
+					smart_split.swap_buf_down()
+					smart_split.move_cursor_down()
+				end,  
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Swap window down",
+			},  
+			{  
+				"<A-C-k>",  
+				function()  
+					smart_split = require("smart-splits")
+					smart_split.swap_buf_up()
+					smart_split.move_cursor_up()
+				end,  
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Swap window up",
+			},  
+			{  
+				"<A-C-l>",  
+				function()  
+					smart_split = require("smart-splits")
+					smart_split.swap_buf_right()
+					smart_split.move_cursor_right()
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Swap window right",
+			},
+
+			-- Resizing
+			{
+				"<A-C-S-h>",
+				function()
+					require("smart-splits").resize_left(1)
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Resize left",
+			},
+			{
+				"<A-C-S-j>",
+				function()
+					require("smart-splits").resize_down(1)
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Resize down",
+			},
+			{
+				"<A-C-S-k>",
+				function()
+					require("smart-splits").resize_up(1)
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Resize up",
+			},
+			{
+				"<A-C-S-l>",
+				function()
+					require("smart-splits").resize_right(1)
+				end,
+				mode = { "n", "v", "x", "i", "t" },
+				desc = "Resize right",
+			},
+
+			-- Alt+Tab for previous window (built-in)
+			{ "<A-Tab>", "<C-w>p", mode = { "n", "v", "x", "i", "t" }, desc = "Go to previous window" },
+		},
+		opts = {},
 	},
 }

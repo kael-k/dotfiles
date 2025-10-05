@@ -39,9 +39,16 @@ vim.keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all without saving" 
 vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })
 vim.keymap.set("n", "<leader>sdo", ":diffthis<CR>", { desc = "Diff this panel" })
 vim.keymap.set("n", "<leader>sdq", ":diffoff<CR>", { desc = "Quit diff this panel" })
+
+-- tabs
 vim.keymap.set("n", "<leader>wto", ":tabnew<CR>", { desc = "Open new tab" })
 vim.keymap.set("n", "<leader>wtq", ":tabclose<CR>", { desc = "Quit/Close new tab" })
 vim.keymap.set("n", "<leader>wth", ":-tabmove<CR>", { desc = "Move tab left" })
 vim.keymap.set("n", "<leader>wtl", ":+tabmove<CR>", { desc = "Move tab right" })
 vim.keymap.set("n", "<leader>wtg", ":0tabmove<CR>", { desc = "Move tab first" })
 vim.keymap.set("n", "<leader>wtG", ":tabmove<CR>", { desc = "Move tab last" })
+
+-- clipboard
+
+vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selection to system clipboard' })
+vim.keymap.set('v', '<leader>d', '"+d', { desc = 'Cut selection to system clipboard' })
