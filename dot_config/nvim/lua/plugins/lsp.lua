@@ -19,9 +19,9 @@ return {
 					"docker_compose_language_service",
 					"grammarly",
 					"html",
-					"jedi_language_server",
 					"jsonls",
 					"pyright",
+					"ruff",
 					"rust_analyzer",
 					"tailwindcss",
 					"yamlls",
@@ -71,5 +71,24 @@ return {
 				}),
 			})
 		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		opts = {
+			bind = true,
+			handler_opts = {
+				border = "rounded",
+			},
+		},
+		keys = {
+			{
+				"<leader>wd",
+				function()
+					vim.lsp.buf.signature_help()
+				end,
+				desc = "Git Branches",
+			},
+		},
 	},
 }

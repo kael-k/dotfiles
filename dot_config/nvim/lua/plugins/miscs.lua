@@ -6,6 +6,6 @@ return {
 		opts = {},
 		config = function()
 			require("hardtime").setup()
-		end
+		end,
 	},
 }
