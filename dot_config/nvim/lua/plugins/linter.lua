@@ -7,7 +7,7 @@ return {
 		},
 		config = function()
 			require("mason-nvim-lint").setup({
-				ensure_installed = { "codespell", "shellcheck", "ruff", "markdownlint", "mypy" },
+				ensure_installed = { "codespell", "shellcheck", "ruff", "markdownlint", "mypy", "yamllint" },
 				automatic_installation = true,
 			})
 
@@ -15,9 +15,11 @@ return {
 			lint.linters_by_ft = {
 				c = { "codespell" }, -- spell issues in identifiers/comments
 				h = { "codespell" },
-				sh = { "shellcheck" },
-				python = { "ruff", "mypy" },
+				json = {"yamllint"},
 				markdown = { "markdownlint" },
+				python = { "ruff", "mypy" },
+				sh = { "shellcheck" },
+				yaml = { "yamllint" }
 			}
 
 			-- run linters on save
