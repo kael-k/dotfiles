@@ -78,7 +78,7 @@ return {
 				function()
 					vim.lsp.buf.hover()
 				end,
-				desc = "Git blame",
+				desc = "Show symbol documentation",
 			},
 		}
 	},
