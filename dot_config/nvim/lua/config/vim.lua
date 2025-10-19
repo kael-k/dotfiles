@@ -32,6 +32,7 @@
 ]])
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 vim.api.nvim_set_keymap("i", "<C-e>", "<Esc>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
@@ -52,3 +53,6 @@ vim.keymap.set("n", "<leader>wtG", ":tabmove<CR>", { desc = "Move tab last" })
 
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selection to system clipboard' })
 vim.keymap.set('v', '<leader>d', '"+d', { desc = 'Cut selection to system clipboard' })
+
+-- Vim related
+vim.keymap.set('n', '<leader>vl', ':Lazy<CR>', { desc = 'Open Lazy' })
