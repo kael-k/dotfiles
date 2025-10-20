@@ -7,8 +7,6 @@ return {
 		},
 		opts = {
 			ensure_installed = {
-				"codelldb",
-				"cpptools",
 				"debugpy",
 				"go-debug-adapter",
 			},
@@ -20,11 +18,23 @@ return {
 		},
 	},
 	{
+		"rcarriga/nvim-dap-ui",
+		opts = {
+			layouts = {
+				{
+					elements = { { id = "disassembly" } },
+					position = "bottom",
+					size = 0.15,
+				},
+			},
+		},
+	},
+	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			"mason-org/mason.nvim",
-			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
+			"rcarriga/nvim-dap-ui",
 		},
 		config = function()
 			local dap = require("dap")
@@ -33,19 +43,37 @@ return {
 			-- Setup dap-ui
 			dapui.setup()
 
-			-- Auto open/close dap-ui on start/end of debugging session
-			dap.listeners.before.attach.dapui_config = function()
-				dapui.open()
-			end
-			dap.listeners.before.launch.dapui_config = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated.dapui_config = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited.dapui_config = function()
-				dapui.close()
-			end
+			dap.adapters.gdb = {
+				id = "gdb",
+				type = "executable",
+				command = "gdb",
+				args = { "--quiet", "--interpreter=dap" }, -- starts gdb as a DAP server
+			}
+
+			dap.configurations.c = {
+				{
+					name = "Run executable (GDB)",
+					type = "gdb",
+					request = "launch",
+					program = function()
+						local path = vim.fn.input({
+							prompt = "Path to executable: ",
+							default = vim.fn.getcwd() .. "/",
+							completion = "file",
+						})
+						return (path ~= nil and path ~= "") and path or dap.ABORT
+					end,
+					cwd = "${workspaceFolder}",
+					stopOnEntry = false,
+					args = {}, -- optional: arguments to program
+				},
+				{
+					name = "Attach to process (GDB)",
+					type = "gdb",
+					request = "attach",
+					processId = require("dap.utils").pick_process, -- pick a pid interactively
+				},
+			}
 
 			-- Key mappings for debugging
 			local map = vim.keymap.set
@@ -65,7 +93,10 @@ return {
 		"Jorenar/nvim-dap-disasm",
 		dependencies = {
 			"mfussenegger/nvim-dap",
+			"rcarriga/nvim-dap-ui",
 		},
-		config = true,
+		opts = {
+			dapui_register = true,
+		},
 	},
 }
