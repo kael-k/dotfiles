@@ -1,8 +1,19 @@
 return {
-	"folke/tokyonight.nvim",
+	"rebelot/kanagawa.nvim",
 	priority = 1000,
 	lazy = false,
 	config = function()
-		vim.cmd("colorscheme tokyonight-night")
+		require("kanagawa").setup({
+			colors = {
+				theme = {
+					all = {
+						ui = {
+							bg_gutter = "none",
+						},
+					},
+				},
+			},
+		})
+		vim.cmd("colorscheme kanagawa-dragon")
 	end,
 }
