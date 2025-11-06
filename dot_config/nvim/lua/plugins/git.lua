@@ -40,17 +40,35 @@ return {
 	},
 	{
 		"tpope/vim-fugitive",
-		lazy = false,
+		event = "VeryLazy",
 		keys = {
 			{
 				"<leader>gdv",
-				":Gvdiffsplit<CR>",
+				"<cmd>Gvdiffsplit<CR>",
 				desc = "Git vertical diff",
 			},
 			{
 				"<leader>gdh",
-				":Gdiffsplit<CR>",
+				"<cmd>Gdiffsplit<CR>",
 				desc = "Git horrizontal diff",
+			},
+		},
+	},
+	{
+		"sindrets/diffview.nvim",
+		event = "VeryLazy",
+		keys = {
+			{
+				"<leader>gdt",
+				"<cmd>DiffviewOpen<CR>",
+				desc = "Git diffview all project from HEAD",
+			},
+			{
+				"<leader>gdT",
+				function()
+					vim.api.nvim_feedkeys(":DiffviewOpen ", "n", false)
+				end,
+				desc = "Git diffview all project from HEAD",
 			},
 		},
 	},

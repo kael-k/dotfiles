@@ -4,14 +4,8 @@ return {
 	{ "tpope/vim-sleuth" },
 	{ "mg979/vim-visual-multi" },
 	{
-		"folke/which-key.nvim",
-		config = true,
-		event = "VeryLazy",
-		opts = { delay = 250 },
-	},
-	{
 		"m4xshen/hardtime.nvim",
-		lazy = false,
+		event = "VeryLazy",
 		dependencies = { "MunifTanjim/nui.nvim" },
 		opts = {},
 		config = function()
@@ -21,7 +15,7 @@ return {
 	{
 		"mrjones2014/smart-splits.nvim",
 		-- build = "./kitty/install-kittens.bash",
-		lazy = false,
+		event = "VeryLazy",
 		keys = {
 			-- Focus movement - works in normal, visual, and terminal modes
 			{

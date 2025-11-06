@@ -13,39 +13,39 @@ return {
 	},
 	keys = {
 		{
-			"<leader>tn",
-			function()
-				require("neotest").run.run()
-			end,
-			desc = "Test: Nearest",
-		},
-		{
-			"<leader>tf",
-			function()
-				require("neotest").run.run(vim.fn.expand("%"))
-			end,
-			desc = "Test: File",
-		},
-		{
-			"<leader>tl",
-			function()
-				require("neotest").run.run_last()
-			end,
-			desc = "Test: Last",
-		},
-		{
-			"<leader>ts",
+			"<leader>wT",
 			function()
 				require("neotest").summary.toggle()
 			end,
-			desc = "Test: Summary",
+			desc = "Test Summary",
 		},
 		{
-			"<leader>to",
+			"<leader>tR",
 			function()
-				require("neotest").output.open({ enter = true })
+				require("neotest").run.run_last()
 			end,
-			desc = "Test: Output (float)",
+			desc = "Run last test(s)",
+		},
+		{
+			"<leader>tD",
+			function()
+				require("neotest").run.run_last({ strategy = "dap" })
+			end,
+			desc = "Debug last test(s)",
+		},
+		{
+			"<leader>tr",
+			function()
+				require("neotest").run.run()
+			end,
+			desc = "Run nearest test(s)",
+		},
+		{
+			"<leader>td",
+			function()
+				require("neotest").run.run({ strategy = "dap" })
+			end,
+			desc = "Debug nearest test(s)",
 		},
 		{
 			"<leader>ta",
@@ -53,31 +53,6 @@ return {
 				require("neotest").run.attach()
 			end,
 			desc = "Test: Attach",
-		},
-		{
-			"<leader>td",
-			function()
-				require("neotest").run.run({ strategy = "dap" })
-			end,
-			desc = "Test: Debug Nearest (DAP)",
-		},
-		{
-			"<leader>tL",
-			function()
-				local nt = require("neotest")
-				nt.run.run_last()
-				vim.defer_fn(function()
-					nt.output.open({ enter = true, auto_close = true })
-				end, 150)
-			end,
-			desc = "Tests: Run Last + Output",
-		},
-		{
-			"<leader>to",
-			function()
-				require("neotest").output.open({ enter = true })
-			end,
-			desc = "Tests: Output (float)",
 		},
 	},
 	config = function()

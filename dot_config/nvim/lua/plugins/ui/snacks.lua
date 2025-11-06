@@ -185,6 +185,17 @@ return {
 			desc = "Recent",
 		},
 		{
+			"<leader>ff",
+			function()
+				Snacks.picker.files({
+					hidden = true,
+					ignored = true,
+					follow = true,
+				})
+			end,
+			desc = "Find Files",
+		},
+		{
 			"<leader>fb",
 			function()
 				Snacks.picker.buffers()

@@ -7,7 +7,7 @@ return {
 		},
 		opts = {
 			ensure_installed = {
-				"debugpy",
+				"python",
 				"go-debug-adapter",
 			},
 			handlers = {
@@ -19,22 +19,17 @@ return {
 	},
 	{
 		"rcarriga/nvim-dap-ui",
-		opts = {
-			layouts = {
-				{
-					elements = { { id = "disassembly" } },
-					position = "bottom",
-					size = 0.15,
-				},
-			},
+		dependencies = {
+			"mason-org/mason.nvim",
+			"mfussenegger/nvim-dap",
 		},
+		config = true,
 	},
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			"mason-org/mason.nvim",
 			"nvim-neotest/nvim-nio",
-			"rcarriga/nvim-dap-ui",
 		},
 		config = function()
 			local dap = require("dap")
@@ -43,13 +38,15 @@ return {
 			-- Setup dap-ui
 			dapui.setup()
 
-			dap.adapters.gdb = {
-				id = "gdb",
-				type = "executable",
-				command = "gdb",
-				args = { "--quiet", "--interpreter=dap" }, -- starts gdb as a DAP server
+			dap.adapters = {
+				python = {},
+				gdb = {
+					id = "gdb",
+					type = "executable",
+					command = "gdb",
+					args = { "--quiet", "--interpreter=dap" }, -- starts gdb as a DAP server
+				},
 			}
-
 			dap.configurations.c = {
 				{
 					name = "Run executable (GDB)",
@@ -75,6 +72,49 @@ return {
 				},
 			}
 
+			dap.configurations.python = {
+				{
+					type = "python",
+					request = "launch",
+					name = "Debug this file (python)",
+					program = "${file}",
+					pythonPath = function()
+						return vim.fn.exepath('python')
+					end
+				},
+				{
+					type = "python",
+					request = "launch",
+					name = "Debug a module (python)",
+					module = function()
+						return vim.fn.input({
+							prompt = "Module name: ",
+						})
+					end,
+					pythonPath = function()
+						return vim.fn.exepath('python')
+					end
+				},
+				{
+					type = "python",
+					request = "launch",
+					name = "Debug a module with custom args (python)",
+					module = function()
+						return vim.fn.input({
+							prompt = "Module name: ",
+						})
+					end,
+					args = function()
+						return vim.fn.input({
+							prompt = "Args: ",
+						})
+					end,
+					pythonPath = function()
+						return vim.fn.exepath('python')
+					end
+				},
+			}
+
 			-- Key mappings for debugging
 			local map = vim.keymap.set
 			map("n", "<leader>dc", dap.continue, { desc = "Continue/Start Debugging" })
@@ -88,15 +128,5 @@ return {
 			map("n", "<leader>wd", dap.repl.open, { desc = "Open REPL" })
 			map("n", "<leader>wD", dapui.toggle, { desc = "Toggle DAP UI" })
 		end,
-	},
-	{
-		"Jorenar/nvim-dap-disasm",
-		dependencies = {
-			"mfussenegger/nvim-dap",
-			"rcarriga/nvim-dap-ui",
-		},
-		opts = {
-			dapui_register = true,
-		},
 	},
 }

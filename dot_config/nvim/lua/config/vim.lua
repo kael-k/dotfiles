@@ -34,10 +34,23 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.api.nvim_set_keymap("i", "<C-e>", "<Esc>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>Q", ":qa!<CR>", { desc = "Quit all without saving" })
-vim.keymap.set("n", "<leader>W", ":wa<CR>", { desc = "Write all buffers" })
+-- Enable title
+vim.opt.title = true
+if #vim.fn.argv() > 0 then
+  -- Use the filename of the first argument
+  vim.opt.titlestring = "nvim - " .. vim.fn.fnamemodify(vim.fn.argv(0), ':t')
+else
+  -- Use the basename of the current working directory
+  vim.opt.titlestring = "nvim - " .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+end
+
+-- generic shortcuts
+vim.keymap.set("i", "<C-e>", "<Esc>", { noremap = true, silent = true })
+vim.keymap.set("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>qq", ":q!<CR>", { desc = "Quit without saving" })
+vim.keymap.set("n", "<leader>qw", ":wq<CR>", { desc = "Save and quit" })
+vim.keymap.set("n", "<leader>qQ", ":qa!<CR>", { desc = "Quit all without saving" })
+vim.keymap.set("n", "<leader>qW", ":wa<CR>", { desc = "Save all and quit" })
 vim.keymap.set("n", "<leader>sdo", ":diffthis<CR>", { desc = "Diff this panel" })
 vim.keymap.set("n", "<leader>sdq", ":diffoff<CR>", { desc = "Quit diff this panel" })
 
@@ -53,6 +66,7 @@ vim.keymap.set("n", "<leader>wtG", ":tabmove<CR>", { desc = "Move tab last" })
 
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selection to system clipboard' })
 vim.keymap.set('v', '<leader>d', '"+d', { desc = 'Cut selection to system clipboard' })
+vim.keymap.set("n", "<leader>r", ":& | normal! n<CR>", { desc = "Apply last substitution, move to next match" })
 
 -- Vim related
 vim.keymap.set('n', '<leader>vl', ':Lazy<CR>', { desc = 'Open Lazy' })

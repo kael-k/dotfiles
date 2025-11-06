@@ -14,6 +14,7 @@ return {
 				"grammarly",
 				"html",
 				"jsonls",
+				"marksman",
 				"pyright",
 				"ruff",
 				"rust_analyzer",
