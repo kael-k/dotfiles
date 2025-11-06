@@ -218,15 +218,15 @@ bindsym $mod+Print exec grimshot save area ~/Pictures/screenshot-$(date +%Y-%m-%
 bindsym $mod+Print+Shift exec sh -c 'grimshot copy area'
 
 # xbackligth
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 16+
-bindsym --locked XF86MonBrightnessDown exec sh -c '[[ $(brightnessctl get) -gt 16 ]] && brightnessctl set 16-'
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 10%+
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 10%-
 exec_always brightnessctl set 100%
 
 # Volume
-bindsym --locked XF86AudioRaiseVolume exec pulseaudio-ctl up
-bindsym --locked XF86AudioLowerVolume exec pulseaudio-ctl down
-bindsym --locked XF86AudioMute exec pulseaudio-ctl mute
-bindsym --locked XF86AudioMicMute exec pulseaudio-ctl mute-input
+bindsym --locked XF86AudioRaiseVolume exec pamixer -i 5
+bindsym --locked XF86AudioLowerVolume exec pamixer -d 5
+bindsym --locked XF86AudioMute exec pamixer -t
+bindsym --locked XF86AudioMicMute exec pamixer --default-source --toggle-mute
 
 # Notification Daemon
 exec swaync
