@@ -26,7 +26,7 @@ set $active_windows rofi -show window -show-icons
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/.config/sway/background.png fill
+output * bg ~/.config/sway/background.jpg fill
 output * scale 1
 #
 # Example configuration:
