@@ -1,0 +1,10 @@
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_USE_XINPUT2=1
+export XDG_CURRENT_DESKTOP=sway
+export LIBVIRT_DEFAULT_URI=qemu:///system
+
+
+# Added by Toolbox App
+export PATH="$PATH:/home/kael-k/.local/share/JetBrains/Toolbox/scripts"
+
+. "$HOME/.cargo/env"
