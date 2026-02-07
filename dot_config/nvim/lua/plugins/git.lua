@@ -1,7 +1,7 @@
 return {
-	{
+	{ 
 		"lewis6991/gitsigns.nvim",
-		event = "BufReadPre",
+		event = "VeryLazy",
 		opts = {
 			preview_config = {
 				border = "rounded",

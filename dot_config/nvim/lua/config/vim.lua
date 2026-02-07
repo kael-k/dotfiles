@@ -44,15 +44,26 @@ else
   vim.opt.titlestring = "nvim - " .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 end
 
--- generic shortcuts
+-- esc with <C-e> in insert, view and terminal mode
 vim.keymap.set("i", "<C-e>", "<Esc>", { noremap = true, silent = true })
+vim.keymap.set("v", "<C-e>", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
+
+-- <C-w> in insert, view and terminal mode
+vim.keymap.set("i", "<C-w>", "<Esc><C-w>", { noremap = true, silent = true })
+vim.keymap.set("v", "<C-w>", "<Esc><C-w>", { noremap = true, silent = true })
+vim.keymap.set("t", "<C-w>", "<C-\\><C-n><C-w>", { noremap = true, silent = true })
+
+-- quit shortcuts
 vim.keymap.set("n", "<leader>qq", ":q!<CR>", { desc = "Quit without saving" })
 vim.keymap.set("n", "<leader>qw", ":wq<CR>", { desc = "Save and quit" })
 vim.keymap.set("n", "<leader>qQ", ":qa!<CR>", { desc = "Quit all without saving" })
 vim.keymap.set("n", "<leader>qW", ":wa<CR>", { desc = "Save all and quit" })
+
+-- enable/disbale diff
 vim.keymap.set("n", "<leader>sdo", ":diffthis<CR>", { desc = "Diff this panel" })
 vim.keymap.set("n", "<leader>sdq", ":diffoff<CR>", { desc = "Quit diff this panel" })
+vim.keymap.set("n", "<leader>sw", ":set wrap!<CR>", { desc = "Toggle line wrap" })
 
 -- tabs
 vim.keymap.set("n", "<leader>wto", ":tabnew<CR>", { desc = "Open new tab" })
@@ -63,7 +74,6 @@ vim.keymap.set("n", "<leader>wtg", ":0tabmove<CR>", { desc = "Move tab first" })
 vim.keymap.set("n", "<leader>wtG", ":tabmove<CR>", { desc = "Move tab last" })
 
 -- clipboard
-
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selection to system clipboard' })
 vim.keymap.set('v', '<leader>d', '"+d', { desc = 'Cut selection to system clipboard' })
 vim.keymap.set("n", "<leader>r", ":& | normal! n<CR>", { desc = "Apply last substitution, move to next match" })

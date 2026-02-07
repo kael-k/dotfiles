@@ -155,6 +155,13 @@ return {
 			desc = "Toggle Terminal",
 		},
 		{
+			"<C-,>",
+			function()
+				Snacks.terminal()
+			end,
+			desc = "Toggle Terminal",
+		},
+		{
 			"<leader>wq",
 			function()
 				Snacks.picker.qflist()

@@ -8,9 +8,6 @@ return {
 		event = "VeryLazy",
 		dependencies = { "MunifTanjim/nui.nvim" },
 		opts = {},
-		config = function()
-			require("hardtime").setup()
-		end,
 	},
 	{
 		"mrjones2014/smart-splits.nvim",

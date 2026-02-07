@@ -19,6 +19,7 @@ require("lazy").setup({
 	spec = {
 		-- import your plugins
 		{ import = "plugins" },
+		{ import = "plugins.testing" },
 		{ import = "plugins.lsp" },
 		{ import = "plugins.ui" },
 		{ import = "plugins.preview" },

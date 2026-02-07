@@ -9,6 +9,7 @@ return {
 			ensure_installed = {
 				"bashls",
 				"clangd",
+				"copilot",
 				"dockerls",
 				"docker_compose_language_service",
 				"grammarly",
@@ -57,20 +58,25 @@ return {
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "nvim_lsp_document_symbol" },
 					{ name = "buffer" },
-					{ name = "cmdline" },
-					{ name = "path" },
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-p>"] = cmp.mapping.select_prev_item(),
 					["<C-n>"] = cmp.mapping.select_next_item(),
-					["<C-d>"] = cmp.mapping.scroll_docs(-4),
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.close(),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
-					["<Tab>"] = cmp.mapping.select_next_item(),
-					["<S-Tab>"] = cmp.mapping.select_prev_item(),
 				}),
+			})
+			cmp.setup.cmdline(":", {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = cmp.config.sources({
+					{ name = "path" },
+				}, {
+					{ name = "cmdline" },
+				}),
+				matching = { disallow_symbol_nonprefix_matching = false },
 			})
 		end,
 		keys = {
@@ -81,6 +87,6 @@ return {
 				end,
 				desc = "Show symbol documentation",
 			},
-		}
+		},
 	},
 }
