@@ -1,6 +1,6 @@
 * {
     font-family: FontAwesome, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 13.5px;
 }
 
 window#waybar {
@@ -9,34 +9,11 @@ window#waybar {
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
-    margin: 10px;
-}
-
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
 }
 
 #workspaces button {
-    padding: 0 7px;
+    min-width: 35px;
+    padding: 0;
     background-color: transparent;
     color: #ffffff;
     /* Use box-shadow instead of border so the text isn't offset */
@@ -162,25 +139,12 @@ label:focus {
 #pulseaudio {
     /* background-color: #f1c40f; */
     /* color: #000000; */
+    margin: 0 10px;
 }
 
 #pulseaudio.muted {
     /* background-color: #90b1b1; */
     /* color: #2a5c45; */
-}
-
-#custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
 }
 
 #temperature {
@@ -191,21 +155,12 @@ label:focus {
     background-color: #eb4d4b;
 }
 
-#tray {
-    background-color: #2980b9;
-}
-
 #tray > .passive {
     -gtk-icon-effect: dim;
 }
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
-}
-
-#idle_inhibitor {
-    background-color: #2d3436;
 }
 
 #idle_inhibitor.activated {
