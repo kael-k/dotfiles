@@ -12,7 +12,6 @@ return {
 				"copilot",
 				"dockerls",
 				"docker_compose_language_service",
-				"grammarly",
 				"html",
 				"jsonls",
 				"marksman",

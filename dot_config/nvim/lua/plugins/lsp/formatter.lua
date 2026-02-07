@@ -5,16 +5,7 @@ return {
 			"mason-org/mason.nvim",
 			"stevearc/conform.nvim",
 		},
-		opts = {
-			ensure_installed = {
-				"clang-format",
-				"shfmt",
-				"ruff",
-				"stylua",
-				"markdownlint",
-				"pyproject-fmt",
-			},
-		},
+		opts = {},
 	},
 	{
 		"stevearc/conform.nvim",
@@ -25,11 +16,17 @@ return {
 			notify_on_error = true,
 			formatters_by_ft = {
 				c = { "clang_format" },
+				css = { "prettier" },
+				graphql = { "prettier" },
 				h = { "clang_format" },
+				json = { "prettier" },
+				less = { "prettier" },
+				lua = { "stylua" },
+				markdown = { "markdownlint" },
+				scss = { "prettier" },
 				sh = { "shfmt" },
 				python = { "ruff_format", "pyproject-fmt" },
-				lua = { "stylua" },
-				markdown = { "markdownlint" }, -- formatter part of markdownlint-cli2
+				yaml = { "prettier" },
 			},
 			formatters = {
 				stylua = {
