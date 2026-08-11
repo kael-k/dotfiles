@@ -1,4 +1,5 @@
-local function setqflist(picker, append)
+-- snacks has no append action of its own
+local function qflist_append(picker)
 	local sel = picker:selected()
 	local items = #sel > 0 and sel or picker:items()
 	local qf = {} ---@type vim.quickfix.entry[]
@@ -12,14 +13,11 @@ local function setqflist(picker, append)
 			end_col = item.end_pos and item.end_pos[2] + 1 or nil,
 			text = item.line or item.comment or item.label or item.name or item.detail or item.text,
 			pattern = item.search,
+			type = ({ "E", "W", "I", "N" })[item.severity],
 			valid = true,
 		}
 	end
-	if append then
-		vim.fn.setqflist(qf, "a")
-	else
-		vim.fn.setqflist(qf)
-	end
+	vim.fn.setqflist(qf, "a")
 end
 
 return {
@@ -42,14 +40,7 @@ return {
 		picker = {
 			enabled = true,
 			ui_select = true,
-			actions = {
-				qflist = function(picker)
-					setqflist(picker)
-				end,
-				qflist_append = function(picker)
-					setqflist(picker, true)
-				end,
-			},
+			actions = { qflist_append = qflist_append },
 			sources = {
 				explorer = {
 					layout = {
@@ -68,7 +59,6 @@ return {
 				input = {
 					keys = {
 						["<C-t>"] = { "tab", mode = { "n", "i" } },
-						["<C-q>"] = { "qflist", mode = { "n", "i" } },
 						["<CM-q>"] = { "qflist_append", mode = { "n", "i" } },
 					},
 				},
@@ -119,50 +109,30 @@ return {
 			desc = "Command History",
 		},
 		{
-			"<leader>,",
+			"<leader>.",
 			function()
 				Snacks.picker.resume()
 			end,
 			desc = "Resume last action (grep, file, qflist etc...)",
 		},
-		{
-			"<leader>k",
-			function()
-				Snacks.picker.keymaps()
-			end,
-			desc = "Keymaps",
-		},
 
 		{
-			"<leader>wn",
-			function()
-				Snacks.notifier.show_history()
-			end,
-			desc = "Notification History",
-		},
-		{
-			"<leader>we",
+			"<leader>;",
 			function()
 				Snacks.explorer()
 			end,
 			desc = "File Explorer",
 		},
 		{
-			"<leader>ws",
-			function()
-				Snacks.terminal()
-			end,
-			desc = "Toggle Terminal",
-		},
-		{
 			"<C-,>",
 			function()
 				Snacks.terminal()
 			end,
+			mode = { "n", "t", "i", "x" },
 			desc = "Toggle Terminal",
 		},
 		{
-			"<leader>wq",
+			"<leader>,",
 			function()
 				Snacks.picker.qflist()
 			end,
@@ -375,12 +345,12 @@ return {
 			end,
 			desc = "Goto Declaration",
 		},
+		-- must stay grr: bare gr shadows native grn/gra/gri/grt/grx
 		{
-			"gr",
+			"grr",
 			function()
 				Snacks.picker.lsp_references()
 			end,
-			nowait = true,
 			desc = "References",
 		},
 		{
@@ -398,6 +368,20 @@ return {
 			desc = "Goto T[y]pe Definition",
 		},
 		-- Vim related keys
+		{
+			"<leader>vk",
+			function()
+				Snacks.picker.keymaps()
+			end,
+			desc = "Keymaps",
+		},
+		{
+			"<leader>vn",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification History",
+		},
 		{
 			"<leader>va",
 			function()
@@ -433,23 +417,8 @@ return {
 			end,
 			desc = "Find Config File",
 		},
-		-- Other
 		{
-			"<leader>.",
-			function()
-				Snacks.scratch()
-			end,
-			desc = "Toggle Scratch Buffer",
-		},
-		{
-			"<leader>Ss",
-			function()
-				Snacks.scratch.select()
-			end,
-			desc = "Select Scratch Buffer",
-		},
-		{
-			"<leader>un",
+			"<leader>vN",
 			function()
 				Snacks.notifier.hide()
 			end,

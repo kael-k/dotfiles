@@ -1,38 +1,34 @@
 ﻿vim.cmd([[
-	syntax on                       "syntax highlighting, see :help syntax
-
 	set termguicolors               "Enable 24-bit color
 
 	set noexpandtab                 "do not expanding tab to spaces
 	set tabstop=4                   "setting tab to 4 columns
 	set shiftwidth=4
-	set softtabstop=0
-	set smarttab
-
 
 	" ===== Show invisibles (tabs vs spaces) =====
 	set list
-	set listchars=tab:→→,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨,space:·
+	set listchars=tab:→→,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 	set number                      "display line number
 	set relativenumber              "display relative line numbers
 	set path+=**                    "improves searching, see :help path
 	set noswapfile                  "disable use of swap files
-	set wildmenu                    "completion menu
-	set backspace=indent,eol,start  "ensure proper backspace functionality
-	set undodir=~/.cache/nvim/undo  "undo ability will persist after exiting file
-	set undofile                    "see :help undodir and :help undofile
-	set incsearch                   "see results while search is being typed, see :help incsearch
+	set wildoptions+=fuzzy          "fuzzy matching in the native cmdline completion menu
+	set undofile                    "persist undo; default undodir is auto-created, see :help undodir
 	set smartindent                 "auto indent on new lines, see :help smartindent
 	set ic                          "ignore case when searching
 	set colorcolumn=80,120          "display color when line reaches pep8 standards
 	set showmatch                   "display matching bracket or parenthesis
-	set hlsearch incsearch          "highlight all pervious search pattern with incsearch
 	set nowrap                      "disable text wrapping
 ]])
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+
+vim.diagnostic.config({
+	severity_sort = true,
+	virtual_lines = { current_line = true },
+})
 
 -- Enable title
 vim.opt.title = true
@@ -49,8 +45,7 @@ vim.keymap.set("i", "<C-e>", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("v", "<C-e>", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-e>", "<C-\\><C-n>", { noremap = true, silent = true })
 
--- <C-w> in insert, view and terminal mode
-vim.keymap.set("i", "<C-w>", "<Esc><C-w>", { noremap = true, silent = true })
+-- <C-w> in view and terminal mode
 vim.keymap.set("v", "<C-w>", "<Esc><C-w>", { noremap = true, silent = true })
 vim.keymap.set("t", "<C-w>", "<C-\\><C-n><C-w>", { noremap = true, silent = true })
 

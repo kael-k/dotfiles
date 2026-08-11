@@ -1,32 +1,44 @@
-return {
-	"3rd/image.nvim",
-	opts = {
-		backend = "kitty",
-		integrations = {
-			markdown = {
-				enabled = true,
-				download_remote_images = true,
-			},
+local opts = {
+	backend = "kitty",
+	integrations = {
+		markdown = {
+			enabled = true,
+			download_remote_images = false,
 		},
 	},
+}
+
+return {
+	"3rd/image.nvim",
+	opts = opts,
 	event = "VeryLazy",
-	config = function(_, opts)
-		local image_previews = require("image")
-		image_previews.setup(opts)
-		image_previews.enable()
+	config = function(_, o)
+		local images = require("image")
+		images.setup(o)
+		images.enable()
 	end,
 	keys = {
 		{
 			"<leader>pi",
 			function()
-				local image_previews = require("image")
-				if image_previews.is_enabled() then
-					image_previews.disable()
+				local images = require("image")
+				if images.is_enabled() then
+					images.disable()
 				else
-					image_previews.enable()
+					images.enable()
 				end
 			end,
-			desc = "Toggle markdown preview",
+			desc = "Toggle image preview",
+		},
+		{
+			"<leader>pI",
+			function()
+				local md = opts.integrations.markdown
+				md.download_remote_images = not md.download_remote_images
+				require("image").setup(opts)
+				vim.notify("Remote images: " .. (md.download_remote_images and "on" or "off"))
+			end,
+			desc = "Toggle remote image download",
 		},
 	},
 }

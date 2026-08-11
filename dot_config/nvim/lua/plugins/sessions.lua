@@ -56,11 +56,11 @@ return {
 			local extra_data = {
 				breakpoints = bps,
 			}
-			return vim.fn.json_encode(extra_data)
+			return vim.json.encode(extra_data)
 		end,
 
 		restore_extra_data = function(_, extra_data)
-			local json = vim.fn.json_decode(extra_data)
+			local json = vim.json.decode(extra_data)
 
 			if json.breakpoints then
 				local ok, breakpoints = pcall(require, "dap.breakpoints")
