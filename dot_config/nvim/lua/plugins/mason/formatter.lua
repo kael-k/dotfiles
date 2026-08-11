@@ -31,15 +31,17 @@ return {
 				scss = { "prettier" },
 				sh = { "shfmt" },
 				python = { "ruff_format" },
-				toml = function(bufnr)
-					local name = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
-					return name == "pyproject.toml" and { "pyproject-fmt" } or {}
-				end,
+				toml = { "pyproject-fmt" },
 				yaml = { "prettier" },
 			},
 			formatters = {
 				stylua = {
 					prepend_args = { "--indent-type", "Tabs", "--indent-width", "1" }, -- width used only for *alignment*
+				},
+				["pyproject-fmt"] = {
+					condition = function(_, ctx)
+						return vim.fs.basename(ctx.filename) == "pyproject.toml"
+					end,
 				},
 			},
 		},
