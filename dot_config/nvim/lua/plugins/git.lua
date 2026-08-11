@@ -59,9 +59,15 @@ return {
 		event = "VeryLazy",
 		keys = {
 			{
-				"<leader>gdt",
-				"<cmd>DiffviewOpen<CR>",
-				desc = "Git diffview changed files (tree)",
+				"<leader>gw",
+				function()
+					if require("diffview.lib").get_current_view() then
+						vim.cmd("DiffviewClose")
+					else
+						vim.cmd("DiffviewOpen")
+					end
+				end,
+				desc = "Toggle git panel (changed files tree)",
 			},
 			{
 				"<leader>gdT",

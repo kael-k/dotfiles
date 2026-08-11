@@ -55,18 +55,34 @@ vim.keymap.set("n", "<leader>qw", ":wq<CR>", { desc = "Save and quit" })
 vim.keymap.set("n", "<leader>qQ", ":qa!<CR>", { desc = "Quit all without saving" })
 vim.keymap.set("n", "<leader>qW", ":wa<CR>", { desc = "Save all and quit" })
 
--- enable/disbale diff
-vim.keymap.set("n", "<leader>sdo", ":diffthis<CR>", { desc = "Diff this panel" })
-vim.keymap.set("n", "<leader>sdq", ":diffoff<CR>", { desc = "Quit diff this panel" })
-vim.keymap.set("n", "<leader>sw", ":set wrap!<CR>", { desc = "Toggle line wrap" })
+-- editor options
+vim.keymap.set("n", "<leader>ed", function()
+	vim.cmd(vim.wo.diff and "diffoff" or "diffthis")
+end, { desc = "Toggle diff on this window" })
+vim.keymap.set("n", "<leader>ew", ":set wrap!<CR>", { desc = "Toggle line wrap" })
+vim.keymap.set("n", "<leader>el", ":set list!<CR>", { desc = "Toggle invisibles (listchars)" })
+vim.keymap.set("n", "<leader>es", ":set spell!<CR>", { desc = "Toggle spell check" })
+vim.keymap.set("n", "<leader>en", function()
+	if vim.wo.relativenumber then
+		vim.wo.number, vim.wo.relativenumber = false, false
+	elseif vim.wo.number then
+		vim.wo.number, vim.wo.relativenumber = true, true
+	else
+		vim.wo.number, vim.wo.relativenumber = true, false
+	end
+end, { desc = "Cycle line numbers: none > absolute > relative" })
 
--- tabs
-vim.keymap.set("n", "<leader>wto", ":tabnew<CR>", { desc = "Open new tab" })
-vim.keymap.set("n", "<leader>wtq", ":tabclose<CR>", { desc = "Quit/Close new tab" })
-vim.keymap.set("n", "<leader>wth", ":-tabmove<CR>", { desc = "Move tab left" })
-vim.keymap.set("n", "<leader>wtl", ":+tabmove<CR>", { desc = "Move tab right" })
-vim.keymap.set("n", "<leader>wtg", ":0tabmove<CR>", { desc = "Move tab first" })
-vim.keymap.set("n", "<leader>wtG", ":tabmove<CR>", { desc = "Move tab last" })
+-- tabs (<A-…> prefix and modes matching the smart-splits window family)
+for key, tab in pairs({
+	o = { "tabnew", "Open new tab" },
+	q = { "tabclose", "Quit/Close tab" },
+	h = { "-tabmove", "Move tab left" },
+	l = { "+tabmove", "Move tab right" },
+	g = { "0tabmove", "Move tab first" },
+	G = { "tabmove", "Move tab last" },
+}) do
+	vim.keymap.set({ "n", "v", "i", "t" }, "<A-t>" .. key, "<cmd>" .. tab[1] .. "<CR>", { desc = tab[2] })
+end
 
 -- clipboard
 vim.keymap.set('v', '<leader>y', '"+y', { desc = 'Copy selection to system clipboard' })
@@ -75,3 +91,7 @@ vim.keymap.set("n", "<leader>r", ":& | normal! n<CR>", { desc = "Apply last subs
 
 -- Vim related
 vim.keymap.set('n', '<leader>vl', ':Lazy<CR>', { desc = 'Open Lazy' })
+
+-- Help / docs
+vim.keymap.set("n", "<leader>hd", vim.lsp.buf.hover, { desc = "Show symbol documentation (native: K)" })
+vim.keymap.set("n", "<leader>hs", vim.lsp.buf.signature_help, { desc = "Show signature help (native: <C-s> in insert)" })
