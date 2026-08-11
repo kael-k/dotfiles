@@ -177,7 +177,7 @@ return {
 			function()
 				Snacks.picker.buffers()
 			end,
-			desc = "Recent",
+			desc = "Buffers",
 		},
 		-- git
 		{
@@ -236,13 +236,6 @@ return {
 			end,
 			desc = "Git Browse",
 			mode = { "n", "v" },
-		},
-		{
-			"<leader>gg",
-			function()
-				Snacks.lazygit()
-			end,
-			desc = "Lazygit",
 		},
 		-- Search with LSP or Vim-related stuff
 		{

@@ -61,14 +61,12 @@ return {
 			{
 				"<leader>gdt",
 				"<cmd>DiffviewOpen<CR>",
-				desc = "Git diffview all project from HEAD",
+				desc = "Git diffview changed files (tree)",
 			},
 			{
 				"<leader>gdT",
-				function()
-					vim.api.nvim_feedkeys(":DiffviewOpen ", "n", false)
-				end,
-				desc = "Git diffview all project from HEAD",
+				":DiffviewOpen ",
+				desc = "Git diffview against a revision...",
 			},
 		},
 	},
